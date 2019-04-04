@@ -109,7 +109,7 @@ UNIQUE KEY `hosttag_uq` (`hid`,`tid`)
 * 在linux上进行交叉编译(前2步跟本地编译一样):
   * linux上编译for mac:`GOOS=darwin GOARCH=amd64 go build -o htag`
   * linux上编译for win:`GOOS=windows GOARCH=amd64 go build -o htag`
-### 使用说明(***如果参数里包含特殊字符一定要加引号,如'|'***)
+### 使用说明(*如果参数里包含特殊字符一定要加引号,如'|'*)
 * -action参数指定要进行操作的类型，包括如下actions:
   * addtag
   **添加tag:** 需要`-tlist`参数提供需要添加的tag列表,多个tag用逗号(,)分割, `htag -action addtag -tlist 'tag1,tag2'`
