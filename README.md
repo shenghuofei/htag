@@ -12,7 +12,11 @@
   1. 支持与(,)或(|)查询，逗号(,)表示与，管道(|)表示或(如:idc=dx,env=test|env=dev表示查询idc是dx且环境为test或者环境为dev的机器）
   2. 正常情况下与(,)或(|)的优先级一样，按从左向右查询；支持用小括号提高优先级（如:idc=lf|(idc=dx,env=prod)将先计算括号里的内容，然后作为整体与idc=lf做或运算）
   3. 实例(**注意后两个tag表达式只是优先级不一样**)：
-     假如有h1,h2,h3,h4四台机器，其tag信息如下： 
+     假如有h1,h2,h3,h4四台机器，其tag信息如下：
+     | First Header  | Second Header |
+     | ------------- | ------------- |
+     | Content Cell  | Content Cell  |
+     | Content Cell  | Content Cell  | 
      | host | tag |
      | --- | --- |
      | h1 | idc=dx |
