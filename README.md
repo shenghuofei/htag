@@ -27,7 +27,6 @@
      | h4 | env=dev |  
 
 
-
      * **idc=dx,env=test|env=dev** 查询结果为：**h1,h2,h4** ; 查询步骤：
        1. idc=dx的有h1,h3; **result=h1,h3**
        2. 并且所有env=test的有h1; h1,h3与h1取交集 **result=h1**
