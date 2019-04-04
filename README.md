@@ -114,25 +114,25 @@ UNIQUE KEY `hosttag_uq` (`hid`,`tid`)
   * linux上编译for win:`GOOS=windows GOARCH=amd64 go build -o htag`
 ### 使用说明(*如果参数里包含特殊字符一定要加引号,如'|'*)
 * -action参数指定要进行操作的类型，包括如下actions:
-  * addtag
+  * addtag  
   **添加tag:** 需要`-tlist`参数提供需要添加的tag列表,多个tag用逗号(,)分割, `htag -action addtag -tlist 'tag1,tag2'`
-  * deltag
+  * deltag  
   **删除tag:** 需要`-tlist`参数提供需要删除的tag列表,多个tag用逗号(,)分割,`htag -action deltag -tlist 'tag1,tag2'`
-  * addhost
+  * addhost  
   **添加机器:** 需要`-hlist`参数提供需要添加的机器列表,多个机器用逗号(,)分割,`htag -action addhost -hlist 'h1,h2'`
-  * delhost
+  * delhost  
   **删除机器:** 需要`-hlist`参数提供需要删除的机器列表,多个机器用逗号(,)分割,`htag -action delhost -hlist 'h1,h2'`
-  * gettaghost
+  * gettaghost  
   **根据tag查询机器列表:** 需要-t参数提供tag表达式,表达式说明见“功能说明”,***tag表达式一定要加引号***,`htag -action gettaghost -t 'idc=lf|(idc=dx,env=prod)'`
-  * gethosttag
+  * gethosttag  
   **查询机器的tag:** 需要-h参数提供要查询的机器名,`htag -action gethosttag -h 'h1'`
-  * addhosttag
+  * addhosttag  
   **给机器添加tag:** 需要-h参数提供要添加tag的机器名及-tlist参数提供机器要添加的tag列表(可以是一个,多个用逗号分隔),`htag -action addhosttag -h 'h1' -tlist 'tag1,tag2'`
-  * delhostsometag
+  * delhostsometag  
   **删除机器的部分tag:** 需要-h参数提供要删除tag的机器名及-tlist参数提供机器要删除的tag列表(可以是一个,多个用逗号分隔),`htag -action delhostsometag -h 'h1' -tlist 'tag1,tag2'`
-  * delhostalltag
+  * delhostalltag  
   **删除机器的所有tag:** 需要-h参数提供要删除tag的机器名,`htag -action delhostalltag -h 'h1'`
-  * updatehosttag
+  * updatehosttag  
   **修改机器的tag:** 需要-h参数提供要修改tag的机器名及-tlist参数提供机器的目标tag列表(可以是一个,多个用逗号分隔),`htag -action updatehosttag -h 'h1' -tlist 'tag1,tag2'`
 * 退出状态码说明:
   *  _ = iota                   0是正常退出的状态码,跳过
