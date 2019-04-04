@@ -9,20 +9,20 @@
 * 机器修改tag
 * 根据机器名查机器的tag
 * 根据tag查机器列表
-  1. 支持与(,)或(|)查询，逗号(,)表示与，管道(|)表示或(如:idc=dx,env=test|env=dev表示查询idc是dx且环境为test或环境为dev的机器）
+  1. 支持与(,)或(|)查询，逗号(,)表示与，管道(|)表示或(如:idc=dx,env=test|env=dev表示查询idc是dx且环境为test或者环境为dev的机器）
   2. 正常情况下与(,)或(|)的优先级一样，按从左向右查询；支持用小括号提高优先级（如:idc=lf|(idc=dx,env=prod)将先计算括号里的内容，然后作为整体与idc=lf做或运算）
   3. 实例(**注意后两个tag表达式只是优先级不一样**)：
-     假如有h1,h2,h3,h4四台机器，其tag信息如下：
-     |host|tag|
-     |-|-|
-     |h1|idc=dx|
-     |h1|env=test|
-     |h2|idc=lf|
-     |h2|env=dev|
-     |h3|idc=dx|
-     |h3|evn=prod|
-     |h4|idc=lf|
-     |h4|env=dev|
+     假如有h1,h2,h3,h4四台机器，其tag信息如下： 
+     | host | tag |
+     | --- | --- |
+     | h1 | idc=dx |
+     | h1 | env=test |
+     | h2 | idc=lf |
+     | h2 | env=dev |
+     | h3 | idc=dx |
+     | h3 | evn=prod |
+     | h4 | idc=lf |
+     | h4 | env=dev |  
 
      * **idc=dx,env=test|env=dev** 查询结果为：**h1,h2,h4** ; 查询步骤：
        1. idc=dx的有h1,h3; **result=h1,h3**
