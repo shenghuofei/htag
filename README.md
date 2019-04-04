@@ -109,7 +109,7 @@ UNIQUE KEY `hosttag_uq` (`hid`,`tid`)
 * 在linux上进行交叉编译(前2步跟本地编译一样):
   * linux上编译for mac:`GOOS=darwin GOARCH=amd64 go build -o htag`
   * linux上编译for win:`GOOS=windows GOARCH=amd64 go build -o htag`
-### 使用说明(<font color=red>如果参数里包含特殊字符一定要加引号,如'|'</font>)
+### 使用说明(***如果参数里包含特殊字符一定要加引号,如'|'***)
 * -action参数指定要进行操作的类型，包括如下actions:
   * addtag
   **添加tag:** 需要`-tlist`参数提供需要添加的tag列表,多个tag用逗号(,)分割, `htag -action addtag -tlist 'tag1,tag2'`
@@ -120,7 +120,7 @@ UNIQUE KEY `hosttag_uq` (`hid`,`tid`)
   * delhost
   **删除机器:** 需要`-hlist`参数提供需要删除的机器列表,多个机器用逗号(,)分割,`htag -action delhost -hlist 'h1,h2'`
   * gettaghost
-  **根据tag查询机器列表:** 需要-t参数提供tag表达式,表达式说明见“功能说明”,<font color=red>tag表达式一定要加引号</font>,`htag -action gettaghost -t 'idc=lf|(idc=dx,env=prod)'`
+  **根据tag查询机器列表:** 需要-t参数提供tag表达式,表达式说明见“功能说明”,***tag表达式一定要加引号***,`htag -action gettaghost -t 'idc=lf|(idc=dx,env=prod)'`
   * gethosttag
   **查询机器的tag:** 需要-h参数提供要查询的机器名,`htag -action gethosttag -h 'h1'`
   * addhosttag
