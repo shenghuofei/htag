@@ -1,5 +1,5 @@
 ## htag机器tag
-###功能说明
+### 功能说明
 * 添加机器
 * 删除机器
 * 添加tag
@@ -72,28 +72,28 @@ UNIQUE KEY `hosttag_uq` (`hid`,`tid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8
 ```
 ### 主要sql语句
-##### 机器添加tag
+#### 机器添加tag
 1. 机器添加tag(ignore 如果存在则忽略,不加的话会报Duplicate错),**添加一个可以用这个语句**:
 `insert ignore into hosttag(hid,tid) select h.id,t.id from host h,tag t where h.name='h1' and t.name='idc=dx';`
 2. 机器添加tag(ignore 如果存在则忽略,不加的话会报Duplicate错),**添加多个可以用这个语句**:
 `insert ignore into hosttag(hid,tid) select h.id,t.id from host h,tag t where h.name='h1' and t.name in ('idc=dx','env=test');`
-##### tag表中增加tag值
+#### tag表中增加tag值
 1. 添加tag值(ignore 如果存在则忽略,不加的话会报Duplicate错),**添加一个可以用这个语句**:
 `insert ignore into tag(name) select 'idc=lf' from dual;`
 2. 添加tag值(ignore 如果存在则忽略,不加的话会报Duplicate错),**添加多个可以用这个语句**:
 `insert ignore into tag(name) values ('idc=rz'),('idc=gh');`
-##### 根据tag查机器
+#### 根据tag查机器
 1. 查询tagname='idc=dx'的所有机器
 `select h.name from host h join hosttag ht on h.id=ht.hid join tag t on t.id=ht.tid where t.name='idc=dx';`
-##### 根据机器查tag
+#### 根据机器查tag
 1. 查询hostname='h1'的机器的所有tag
 `select t.name from tag t join hosttag ht on t.id=ht.tid join host h on ht.hid=h.id where h.name='h1';`
-##### 删除机器tag
+#### 删除机器tag
 1. 删除机器h1的某些tag:
 `delete from hosttag where hid in (select id from host where name='h1') and tid in (select id from tag where name in ('idc=dx','env=test'));`
 2. 删除机器h1的所有tag:
 `delete from hosttag where hid = (select id from host where name='h1');`
-##### 修改机器tag（分两步做，增加新的删除老的）:
+#### 修改机器tag（分两步做，增加新的删除老的）:
 1. 先添加新的tag:
 `insert ignore into hosttag(hid,tid) select h.id,t.id from host h,tag t where h.name='h1' and t.name in ('idc=dx','env=test');`
 2. 再删除老的tag:
@@ -109,7 +109,7 @@ UNIQUE KEY `hosttag_uq` (`hid`,`tid`)
 * 在linux上进行交叉编译(前2步跟本地编译一样):
   * linux上编译for mac:`GOOS=darwin GOARCH=amd64 go build -o htag`
   * linux上编译for win:`GOOS=windows GOARCH=amd64 go build -o htag`
-### 使用说明(<font color=red>如果参数里包含特殊字符一定要加引号,如'|'</font>)
+### 使用说明(<font color=red>如果参数里包含特殊字符一定要加引号,如'|'</font>)
 * -action参数指定要进行操作的类型，包括如下actions:
   * addtag
   **添加tag:** 需要`-tlist`参数提供需要添加的tag列表,多个tag用逗号(,)分割, `htag -action addtag -tlist 'tag1,tag2'`
@@ -120,17 +120,17 @@ UNIQUE KEY `hosttag_uq` (`hid`,`tid`)
   * delhost
   **删除机器:** 需要`-hlist`参数提供需要删除的机器列表,多个机器用逗号(,)分割,`htag -action delhost -hlist 'h1,h2'`
   * gettaghost
-  **根据tag查询机器列表:** 需要-t参数提供tag表达式,表达式说明见“功能说明”,<font color=red>tag表达式一定要加引号</font>,`htag -action gettaghost -t 'idc=lf|(idc=dx,env=prod)'`
+  **根据tag查询机器列表:** 需要-t参数提供tag表达式,表达式说明见“功能说明”,<font color=red>tag表达式一定要加引号</font>,`htag -action gettaghost -t 'idc=lf|(idc=dx,env=prod)'`
   * gethosttag
   **查询机器的tag:** 需要-h参数提供要查询的机器名,`htag -action gethosttag -h 'h1'`
   * addhosttag
-  **给机器添加tag:** 需要-h参数提供要添加tag的机器名及-tlist参数提供机器要添加的tag列表(可以是一个,多个用逗号分隔),`htag -action addhosttag -h 'h1' -tlist 'tag1,tag2'`
+  **给机器添加tag:** 需要-h参数提供要添加tag的机器名及-tlist参数提供机器要添加的tag列表(可以是一个,多个用逗号分隔),`htag -action addhosttag -h 'h1' -tlist 'tag1,tag2'`
   * delhostsometag
-  **删除机器的部分tag:** 需要-h参数提供要删除tag的机器名及-tlist参数提供机器要删除的tag列表(可以是一个,多个用逗号分隔),`htag -action delhostsometag -h 'h1' -tlist 'tag1,tag2'`
+  **删除机器的部分tag:** 需要-h参数提供要删除tag的机器名及-tlist参数提供机器要删除的tag列表(可以是一个,多个用逗号分隔),`htag -action delhostsometag -h 'h1' -tlist 'tag1,tag2'`
   * delhostalltag
   **删除机器的所有tag:** 需要-h参数提供要删除tag的机器名,`htag -action delhostalltag -h 'h1'`
   * updatehosttag
-  **修改机器的tag:** 需要-h参数提供要修改tag的机器名及-tlist参数提供机器的目标tag列表(可以是一个,多个用逗号分隔),`htag -action updatehosttag -h 'h1' -tlist 'tag1,tag2'`
+  **修改机器的tag:** 需要-h参数提供要修改tag的机器名及-tlist参数提供机器的目标tag列表(可以是一个,多个用逗号分隔),`htag -action updatehosttag -h 'h1' -tlist 'tag1,tag2'`
 * 退出状态码说明:
   *  _ = iota                   0是正常退出的状态码,跳过
   *  DBCONNERR                  db连接失败(1)
