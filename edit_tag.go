@@ -10,9 +10,11 @@ func addTag(tags string) {
 	// 先检查tag格式是否符合要求
 	checkTag(tags)
 	tx, err := db.Begin()
+	txsql := fmt.Sprintf("INSERT IGNORE INTO %s(name) VALUES(?)", TagTable)
 	for _, tag := range tag_list {
 		// 每次循环用的都是tx内部的连接，没有新建连接，效率高
-		tx.Exec("INSERT IGNORE INTO tag(name) VALUES(?)", tag)
+		// tx.Exec("INSERT IGNORE INTO tag(name) VALUES(?)", tag)
+		tx.Exec(txsql, tag)
 	}
 	err = tx.Commit()
 	checkErr(err, "hostAddTag commit transaction failed", SQLTXERR)
@@ -23,9 +25,13 @@ func addTag(tags string) {
 func delTag(tags string) {
 	tag_list := checkTagListArgv(tags)
 	tx, err := db.Begin()
+	sql := fmt.Sprintf("SELECT ht.id FROM %s ht JOIN %s t ON ht.tid = t.id WHERE t.name=?", HostTagTable, TagTable)
+	txsql := fmt.Sprintf("DELETE FROM %s WHERE name=?", TagTable)
 	for _, tag := range tag_list {
 		//先检查tag是否有机器关联
-		rows, err := db.Query("SELECT ht.id FROM hosttag ht JOIN tag t ON ht.tid = t.id WHERE t.name=?", tag)
+		// rows, err := db.Query("SELECT ht.id FROM hosttag ht JOIN tag t ON ht.tid = t.id WHERE t.name=?", tag)
+		rows, err := db.Query(sql, tag)
+		defer rows.Close()
 		checkErr(err, "delTag check tag is used or not failed", EXECSQLERR)
 		if rows.Next() {
 			/*
@@ -39,7 +45,8 @@ func delTag(tags string) {
 			continue
 		}
 		// 每次循环用的都是tx内部的连接，没有新建连接，效率高
-		tx.Exec("DELETE FROM tag WHERE name=?", tag)
+		// tx.Exec("DELETE FROM tag WHERE name=?", tag)
+		tx.Exec(txsql, tag)
 	}
 	err = tx.Commit()
 	checkErr(err, "delTag commit transaction failed", SQLTXERR)

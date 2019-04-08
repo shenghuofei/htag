@@ -1,7 +1,10 @@
 package main
 
 var (
-	DBdsn string = "${dbuser}:${dbpasswd}@tcp(${dbhost}:${dbport})/${databasename}?charset=utf8" // DB连接配置
+	DBdsn        string = "${dbuser}:${dbpasswd}@tcp(${dbhost}:${dbport})/${databasename}?charset=utf8" // DB连接配置
+	HostTable    string = "host"                                                                        // host表名
+	TagTable     string = "tag"                                                                         // tag表名
+	HostTagTable string = "hosttag"                                                                     // hosttag表名
 )
 
 // 错误退出码

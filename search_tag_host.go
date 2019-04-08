@@ -100,8 +100,10 @@ func getTagList(tags string) (tag_list, sep []string) {
 // 查找单个tag的所有实例
 func getOneTagHost(tag string) map[string]bool {
 	// fmt.Println("tag:", tag)
-	// sql := fmt.Sprintf("select name from instances where id in (select ins_id from tags where tag='%s')", tag)
-	rows, err := db.Query("SELECT h.name from host h JOIN hosttag ht ON h.id=ht.hid JOIN tag t ON t.id=ht.tid WHERE t.name=?", tag)
+	sql := fmt.Sprintf("SELECT h.name from %s h JOIN %s ht ON h.id=ht.hid JOIN %s t ON t.id=ht.tid WHERE t.name=    ?", HostTable, HostTagTable, TagTable)
+	// rows, err := db.Query("SELECT h.name from host h JOIN hosttag ht ON h.id=ht.hid JOIN tag t ON t.id=ht.tid WHERE t.name=?", tag)
+	rows, err := db.Query(sql, tag)
+	defer rows.Close()
 	checkErr(err, "getOneTagHost execute sql fail", EXECSQLERR)
 	name := ""
 	res := map[string]bool{}
