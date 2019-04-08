@@ -1,7 +1,7 @@
 package main
 
 var (
-	DBdsn string = "dbuser:dbpasswd@tcp(dbhost:dbport)/databasename?charset=utf8" // DB连接配置
+	DBdsn string = "${dbuser}:${dbpasswd}@tcp(${dbhost}:${dbport})/${databasename}?charset=utf8" // DB连接配置
 )
 
 // 错误退出码

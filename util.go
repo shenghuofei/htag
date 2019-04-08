@@ -68,10 +68,24 @@ func checkHostListArgv(hosts string) []string {
 
 // 机器求并集
 func hostOr(m1, m2 map[string]bool) map[string]bool {
-	res := m2
-	for key, value := range m1 {
-		if ok, _ := m2[key]; !ok {
-			res[key] = value
+	// 为提高性能，始终只遍历小的
+	res := m1
+	// fmt.Println("or",m1,m2)
+	if len(m1) < len(m2) {
+		// res始终初始化为大的集合，然后判断小集合，把小集合中有而大集合中没有的元素加入res中
+		res = m2
+		for key, value := range m1 {
+			// fmt.Println("m1",key)
+			if ok, _ := m2[key]; !ok {
+				res[key] = value
+			}
+		}
+	} else {
+		for key, value := range m2 {
+			// fmt.Println("m2",key)
+			if ok, _ := m1[key]; !ok {
+				res[key] = value
+			}
 		}
 	}
 	return res
@@ -79,10 +93,22 @@ func hostOr(m1, m2 map[string]bool) map[string]bool {
 
 // 机器求交集
 func hostAnd(m1, m2 map[string]bool) map[string]bool {
+	// 为提高性能，始终只遍历小的
+	// fmt.Println("and",m1,m2)
 	res := map[string]bool{}
-	for key, value := range m1 {
-		if ok, _ := m2[key]; ok {
-			res[key] = value
+	if len(m1) < len(m2) {
+		for key, value := range m1 {
+			// fmt.Println("m1",key)
+			if ok, _ := m2[key]; ok {
+				res[key] = value
+			}
+		}
+	} else {
+		for key, value := range m2 {
+			// fmt.Println("m2",key)
+			if ok, _ := m1[key]; ok {
+				res[key] = value
+			}
 		}
 	}
 	return res
